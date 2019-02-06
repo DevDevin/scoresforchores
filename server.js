@@ -6,6 +6,7 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const jobs = require("./routes/api/jobs");
 const rewards = require("./routes/api/rewards");
+const dayofjobs = require("./routes/api/dayofjobs");
 
 const app = express();
 
@@ -32,6 +33,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/jobs", jobs);
 app.use("/api/rewards", rewards);
+app.use("/api/dayofjobs", dayofjobs);
 
 const port = process.env.PORT || 5000;
 

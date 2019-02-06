@@ -46,4 +46,67 @@ router.post(
   }
 );
 
+// @route   DELETE api/job
+// @desc    Delete job by id
+// @access  Private
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("working");
+    Reward.findById(req.body.id) // TODO: make this a variable that is the id of the selected reward
+      .then(reward => {
+        reward.remove();
+        reward.save();
+        res.json({ message: "reward deleted: ", reward });
+      })
+      .catch({ error: "could not find reward id: " });
+  }
+);
+
+// @route POST api/jobs/edit
+// @desc Add job to the database
+// @access Private
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("working");
+    Reward.findById(req.body.id) // TODO: make this a variable that is the id of the selected reward
+      .then(reward => {
+        reward.remove();
+        reward.save();
+        res.json({ message: "reward deleted: ", reward });
+      })
+      .catch({ error: "could not find reward id: " });
+  }
+);
+
+// @route   EDIT api/jobs/edit/:rewardName
+// @desc    Edit job by jobName
+// @access  Private
+router.post(
+  "/edit/:rewardName",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateRewardInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+    console.log("working");
+    Reward.findOne({ rewardName: req.params.rewardName }) // may have to find a way to turn the value of the rewardName before the change into a variable so that we can still use it to find the job. or just find a way to get the selected jobs id
+      .then(reward => {
+        if (req.body.rewardName) reward.rewardName = req.body.rewardName;
+        if (req.body.description) reward.description = req.body.description;
+        if (req.body.points) reward.points = req.body.points;
+        reward.save();
+        res.json({ message: "reward edited: ", reward });
+      })
+      .catch(err => res.json({ error: err }));
+  }
+);
+
 module.exports = router;

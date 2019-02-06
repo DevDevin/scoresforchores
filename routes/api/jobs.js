@@ -46,4 +46,49 @@ router.post(
   }
 );
 
+// @route   DELETE api/job
+// @desc    Delete job by id
+// @access  Private
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("working");
+    Job.findById(req.body.id) // TODO: make this a variable that is the id of the selected job
+      .then(job => {
+        job.remove();
+        job.save();
+        res.json({ message: "job deleted: ", job });
+      })
+      .catch(err => res.json({ error: err }));
+  }
+);
+
+// @route   EDIT api/jobs/edit/:jobName
+// @desc    Edit job by jobName
+// @access  Private
+router.post(
+  "/edit/:jobName",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateJobInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+    console.log("working");
+    Job.findOne({ jobName: req.params.jobName }) // may have to find a way to turn the value of the jobName before the change into a variable so that we can still use it to find the job. or just find a way to get the selected jobs id
+      .then(job => {
+        if (req.body.jobName) job.jobName = req.body.jobName;
+        if (req.body.description) job.description = req.body.description;
+        if (req.body.points) job.points = req.body.points;
+        job.save();
+        res.json({ message: "job edited: ", job });
+      })
+      .catch(err => res.json({ error: err }));
+  }
+);
+
 module.exports = router;

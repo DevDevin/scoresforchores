@@ -1,0 +1,17 @@
+TODO:
+delete dayofjob -- done
+add dayofjob entries -- done
+edit dayofjob -- done
+edit jobs -- done
+delete jobs -- done
+edit rewards -- done
+delete rewards -- done
+logout functionality
+complete a job
+submit reward request (child)
+accept or reject reward request (parent)
+add points
+?? submit job completion ??
+?? accept or reject job completion ?? 
+get a list of all the rewards
+get a list of all the jobs
