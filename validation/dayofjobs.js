@@ -6,6 +6,7 @@ module.exports = function validateDayofJobInput(data) {
 
   data.jobName = !isEmpty(data.jobName) ? data.jobName : "";
   data.day = !isEmpty(data.day) ? data.day : "";
+  data.childName = !isEmpty(data.childName) ? data.childName : "";
 
   // jobname Validation
 
@@ -17,6 +18,11 @@ module.exports = function validateDayofJobInput(data) {
 
   if (Validator.isEmpty(data.day)) {
     errors.day = "You must choose a day of the week to assign this job";
+  }
+
+  // Child Name Validation
+  if (Validator.isEmpty(data.childName)) {
+    errors.childName = "Child Name field is required";
   }
 
   return {

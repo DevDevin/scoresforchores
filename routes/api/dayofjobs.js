@@ -34,7 +34,8 @@ router.post(
         const newDayofJob = new DayofJob({
           jobName: req.body.jobName,
           day: req.body.day,
-          complete: req.body.complete
+          complete: req.body.complete,
+          childName: req.body.childName
         });
 
         newDayofJob
@@ -62,6 +63,54 @@ router.delete(
       })
       .catch(err => {
         res.json({ message: "could not delete day of job" });
+      });
+  }
+);
+
+// @route   Complete api/dayofjob/completionrequest
+// @desc    Submit a completion request for jobs done
+// @access  Private
+router.post(
+  "/completionrequest",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("working");
+    DayofJob.findById(req.body.id) // TODO: make this a variable that is the id of the selected reward
+      .then(dayofjob => {
+        dayofjob.status = "Submitted";
+        dayofjob.save();
+        res.json({ message: "dayofjob completed: ", dayofjob });
+      })
+      .catch(err => {
+        res.json({ message: "could not complete day of job" });
+      });
+  }
+);
+
+// @route   Accept or reject a completion request
+// @desc    Submit a completion request for jobs done
+// @access  Private
+router.post(
+  "/completionrequestdecision",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("working");
+    DayofJob.findById(req.body.id) // TODO: make this a variable that is the id of the selected reward
+      .then(dayofjob => {
+        if (req.body.decision === "Accept") {
+          dayofjob.status = "Accepted";
+          dayofjob.save();
+          res.json({ message: "Completion Request Accepted: ", dayofjob });
+        }
+
+        if (req.body.decision === "Reject") {
+          dayofjob.status = "Rejected";
+          dayofjob.save();
+          res.json({ message: "Completion Request Rejected: ", dayofjob });
+        }
+      })
+      .catch(err => {
+        res.json({ message: "could not find job by id", err });
       });
   }
 );

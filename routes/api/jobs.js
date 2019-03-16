@@ -91,4 +91,27 @@ router.post(
   }
 );
 
+// @route   GET api/jobs/all
+// @desc    Get all jobs
+// @access  Public
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Job.find()
+      .populate("job", ["name"])
+      .then(jobs => {
+        if (!jobs) {
+          errors.noprofile = "There are no jobs";
+          return res.status(404).json(errors);
+        }
+        console.log("get jobs api called. Jobs: ", jobs);
+        res.json(jobs);
+      })
+      .catch(err => res.status(404).json({ job: "There are no Jobs" }));
+  }
+);
+
 module.exports = router;

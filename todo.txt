@@ -7,10 +7,11 @@ delete jobs -- done
 edit rewards -- done
 delete rewards -- done
 logout functionality
-complete a job
-submit reward request (child)
-accept or reject reward request (parent)
-add points
+send job completion request -- done
+accept/reject job completion request (add points and mark as complete if accepted)
+submit reward request (child) -- done
+accept reward request -- done
+reject reward request -- done
 ?? submit job completion ??
 ?? accept or reject job completion ?? 
 get a list of all the rewards
