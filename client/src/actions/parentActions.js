@@ -1,11 +1,11 @@
 import axios from "axios";
-import { GET_ERRORS, GET_JOBS, JOBS_LOADING } from "./types";
+import { GET_ERRORS, GET_JOBS, JOBS_LOADING, GET_REWARDS } from "./types";
 
-// Register User
+// Add Job
 export const addJob = (newJob, history) => dispatch => {
   axios
     .post("/api/jobs/add", newJob)
-    .then(res => history.push("/joblist"))
+    .then(res => history.push("/jobs"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -14,11 +14,11 @@ export const addJob = (newJob, history) => dispatch => {
     );
 };
 
-// Register User
+// Add Reward
 export const addReward = (newReward, history) => dispatch => {
   axios
     .post("/api/rewards/add", newReward)
-    .then(res => history.push("/joblist"))
+    .then(res => history.push("/rewards"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -27,7 +27,7 @@ export const addReward = (newReward, history) => dispatch => {
     );
 };
 
-// Get all profiles
+// Get all jobs
 export const getJobs = () => dispatch => {
   dispatch(setJobsLoading());
   axios
@@ -41,6 +41,25 @@ export const getJobs = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_JOBS,
+        payload: null
+      })
+    );
+};
+
+// Get all rewards
+export const getRewards = () => dispatch => {
+  dispatch(setJobsLoading());
+  axios
+    .get("/api/rewards/all")
+    .then(res =>
+      dispatch({
+        type: GET_REWARDS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_REWARDS,
         payload: null
       })
     );

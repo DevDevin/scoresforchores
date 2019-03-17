@@ -46,7 +46,7 @@ router.post(
   }
 );
 
-// @route   DELETE api/job
+// @route   DELETE api/reward
 // @desc    Delete job by id
 // @access  Private
 router.delete(
@@ -106,6 +106,29 @@ router.post(
         res.json({ message: "reward edited: ", reward });
       })
       .catch(err => res.json({ error: err }));
+  }
+);
+
+// @route   GET api/rewards/all
+// @desc    Get all jobs
+// @access  Public
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Reward.find()
+      .populate("reward", ["name"])
+      .then(rewards => {
+        if (!rewards) {
+          errors.noprofile = "There are no rewards";
+          return res.status(404).json(errors);
+        }
+        console.log("get rewards api called. Jobs: ", rewards);
+        res.json(rewards);
+      })
+      .catch(err => res.status(404).json({ job: "There are no rewards" }));
   }
 );
 

@@ -1,12 +1,13 @@
 import {
   GET_JOBS,
   PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE
+  CLEAR_CURRENT_PROFILE,
+  GET_REWARDS
 } from "../actions/types";
 
 const initialState = {
   profile: null,
-  jobs: null,
+  rewards: null,
   loading: false
 };
 
@@ -17,11 +18,11 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
-    case GET_JOBS:
-      console.log("entered GET_JOBS function in jobReducer.js");
+    case GET_REWARDS:
+      console.log("entered GET_REWARDS function in rewardReducer.js");
       return {
         ...state,
-        jobs: action.payload,
+        rewards: action.payload,
         loading: false
       };
     case CLEAR_CURRENT_PROFILE:

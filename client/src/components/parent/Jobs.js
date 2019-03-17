@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table } from "reactstrap";
+import { Table, Button } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
@@ -22,11 +22,15 @@ class Jobs extends Component {
         jobItems = jobs.map(job => (
           <tbody>
             <tr>
-              <td>{job.jobName}</td>
-              <td>{job.description}</td>
-              <td>{job.points}</td>
-              <td>Edit Job</td>
-              <td>Delete Job</td>
+              <td key={job._id}>{job.jobName}</td>
+              <td key={job._id}>{job.description}</td>
+              <td key={job._id}>{job.points}</td>
+              <td key={job._id}>
+                <Button color="warning">Edit</Button>{" "}
+              </td>
+              <td key={job._id}>
+                <Button color="danger">Delete</Button>{" "}
+              </td>
             </tr>
           </tbody>
         ));
@@ -44,12 +48,14 @@ class Jobs extends Component {
               <p className="lead text-center">
                 Browse and connect with developers
               </p>
-              <Table bordered>
+              <Table borderless>
                 <thead>
                   <tr>
                     <th>Job</th>
                     <th>Description</th>
                     <th>Points</th>
+                    <th>Edit Job</th>
+                    <th>Delete Job</th>
                   </tr>
                 </thead>
                 {jobItems}
