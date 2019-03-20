@@ -6,3 +6,4 @@ export const GET_JOB = "GET_JOB";
 export const CLEAR_CURRENT_PROFILE = "CLEAR_CURRENT_PROFILE";
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const GET_REWARDS = "GET_REWARDS";
+export const GET_DAYOFJOBS = "GET_DAYOFJOBS";

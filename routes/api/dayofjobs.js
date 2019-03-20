@@ -141,4 +141,27 @@ router.post(
   }
 );
 
+// @route   GET api/dayofjobs/all
+// @desc    Get all dayofjobs
+// @access  Public
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    DayofJob.find()
+      .populate("dayofjob", ["name"])
+      .then(dayofjob => {
+        if (!dayofjob) {
+          errors.noprofile = "There are no dayofjob";
+          return res.status(404).json(errors);
+        }
+        console.log("get dayofjob api called dayofjobs.js");
+        res.json(dayofjob);
+      })
+      .catch(err => res.status(404).json({ job: "There are no dayofjob" }));
+  }
+);
+
 module.exports = router;

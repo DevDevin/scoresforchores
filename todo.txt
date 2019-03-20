@@ -14,5 +14,13 @@ accept reward request -- done
 reject reward request -- done
 ?? submit job completion ??
 ?? accept or reject job completion ?? 
-get a list of all the rewards
-get a list of all the jobs
+get a list of all the rewards --done
+get a list of all the jobs -- done
+
+edit jobs
+edit rewards
+messaging system
+schedule view (child)
+submit completion request (child)
+accept or reject completion request (parent)
+assign jobs (parent)

@@ -15,7 +15,7 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import "./App.css";
-import Schedule from "./components/child/Schedule";
+import Schedule from "./components/child/schedule/Schedule";
 import AddJob from "./components/parent/AddJob";
 import AddReward from "./components/parent/AddReward";
 import RewardCatalog from "./components/child/RewardCatalog";
