@@ -47,19 +47,21 @@ router.post(
 );
 
 // @route   DELETE api/reward
-// @desc    Delete job by id
+// @desc    Delete reward by id
 // @access  Private
 router.delete(
-  "/",
+  "/:reward_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log("working");
-    Reward.findById(req.body.id) // TODO: make this a variable that is the id of the selected reward
+    Reward.findById(req.params.reward_id) // TODO: make this a variable that is the id of the selected reward
       .then(reward => {
         reward.remove();
         reward.save();
         res.json({ message: "reward deleted: ", reward });
+        history.push("/rewards");
       })
+      .then(res => history.push("/rewards"))
       .catch({ error: "could not find reward id: " });
   }
 );
@@ -129,6 +131,28 @@ router.get(
         res.json(rewards);
       })
       .catch(err => res.status(404).json({ job: "There are no rewards" }));
+  }
+);
+
+// @route GET api/rewards/editReward
+// @desc Get reward that was selected for editing
+// @access private
+router.get(
+  "/editReward/:reward_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    console.log("entered api/rewards/editReward");
+    Reward.findOne({ reward: req.params.reward_id })
+      .populate("reward", ["name", "avatar"])
+      .then(reward => {
+        if (!reward) {
+          reward.noReward = "There is no reward that matches";
+          return res.status(404).json(errors);
+        }
+        res.json(reward);
+      })
+      .catch(err => res.status(404).json(err));
   }
 );
 

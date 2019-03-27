@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_ERRORS, GET_JOBS, JOBS_LOADING, GET_REWARDS } from "./types";
+import {
+  GET_ERRORS,
+  GET_JOBS,
+  JOBS_LOADING,
+  GET_REWARDS,
+  GET_REWARD
+} from "./types";
 
 // Add Job
 export const addJob = (newJob, history) => dispatch => {
@@ -65,9 +71,64 @@ export const getRewards = () => dispatch => {
     );
 };
 
+// Delete Job
+export const deleteJob = id => dispatch => {
+  axios
+    .delete(`api/jobs/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_JOBS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Delete Reward
+export const deleteReward = id => dispatch => {
+  axios
+    .delete(`api/rewards/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_REWARDS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Profile loading
 export const setJobsLoading = () => {
   return {
     type: JOBS_LOADING
   };
+};
+
+// Get selected reward
+export const getSelectedReward = id => dispatch => {
+  dispatch(setJobsLoading());
+  axios
+    .get(`api/rewards/editReward/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_REWARD,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_REWARD,
+        payload: {}
+      })
+    );
 };

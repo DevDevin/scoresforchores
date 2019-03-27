@@ -3,11 +3,17 @@ import { Table, Button } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
-import { getRewards } from "../../actions/parentActions";
+import { getRewards, deleteReward } from "../../actions/parentActions";
+import EditRewardModal from "../parent/EditRewardModal";
 
 class Rewards extends Component {
   componentDidMount() {
     this.props.getRewards();
+  }
+
+  onDeleteClick(id) {
+    this.props.deleteReward(id);
+    this.props.history.push("/rewards");
   }
 
   render() {
@@ -26,10 +32,15 @@ class Rewards extends Component {
               <td key={reward._id}>{reward.description}</td>
               <td key={reward._id}>{reward.points}</td>
               <td key={reward._id}>
-                <Button color="warning">Edit</Button>{" "}
+                <EditRewardModal />
               </td>
               <td key={reward._id}>
-                <Button color="danger">Delete</Button>{" "}
+                <button
+                  onClick={this.onDeleteClick.bind(this, reward._id)}
+                  className="btn btn-danger"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>
@@ -66,6 +77,7 @@ class Rewards extends Component {
 
 Rewards.propTypes = {
   getRewards: PropTypes.func.isRequired,
+  deleteReward: PropTypes.func.isRequired,
   reward: PropTypes.object.isRequired
 };
 
@@ -75,5 +87,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getRewards }
+  { getRewards, deleteReward }
 )(Rewards);

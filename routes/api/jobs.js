@@ -46,15 +46,15 @@ router.post(
   }
 );
 
-// @route   DELETE api/job
+// @route   DELETE api/jobs/delete
 // @desc    Delete job by id
 // @access  Private
 router.delete(
-  "/",
+  "/:job_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log("working");
-    Job.findById(req.body.id) // TODO: make this a variable that is the id of the selected job
+    Job.findById(req.params.job_id) // TODO: make this a variable that is the id of the selected job
       .then(job => {
         job.remove();
         job.save();

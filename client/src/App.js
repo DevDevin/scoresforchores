@@ -23,6 +23,7 @@ import ChildHome from "./components/child/ChildHome";
 import ParentHome from "./components/parent/ParentHome";
 import Jobs from "./components/parent/Jobs";
 import Rewards from "./components/parent/Rewards";
+import EditReward from "./components/parent/EditReward";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -64,6 +65,13 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/add-reward" component={AddReward} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/edit-reward"
+                  component={EditReward}
+                />
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/jobs" component={Jobs} />

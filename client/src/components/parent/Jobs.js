@@ -4,10 +4,16 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getJobs } from "../../actions/parentActions";
+import { deleteJob } from "../../actions/parentActions";
 
 class Jobs extends Component {
   componentDidMount() {
     this.props.getJobs();
+  }
+
+  onDeleteClick(id) {
+    this.props.deleteJob(id);
+    this.props.history.push("/jobs");
   }
 
   render() {
@@ -29,7 +35,12 @@ class Jobs extends Component {
                 <Button color="warning">Edit</Button>{" "}
               </td>
               <td key={job._id}>
-                <Button color="danger">Delete</Button>{" "}
+                <button
+                  onClick={this.onDeleteClick.bind(this, job._id)}
+                  className="btn btn-danger"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>
@@ -70,6 +81,7 @@ class Jobs extends Component {
 
 Jobs.propTypes = {
   getJobs: PropTypes.func.isRequired,
+  deleteJob: PropTypes.func.isRequired,
   job: PropTypes.object.isRequired
 };
 
@@ -79,5 +91,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getJobs }
+  { getJobs, deleteJob }
 )(Jobs);
