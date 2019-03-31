@@ -32,7 +32,7 @@ class Rewards extends Component {
               <td key={reward._id}>{reward.description}</td>
               <td key={reward._id}>{reward.points}</td>
               <td key={reward._id}>
-                <EditRewardModal />
+                <EditRewardModal rewardID={reward._id} />
               </td>
               <td key={reward._id}>
                 <button

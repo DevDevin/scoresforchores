@@ -2,13 +2,15 @@ import {
   GET_JOBS,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  GET_REWARDS
+  GET_REWARDS,
+  GET_REWARD
 } from "../actions/types";
 
 const initialState = {
   profile: null,
   rewards: null,
-  loading: false
+  loading: false,
+  reward: null
 };
 
 export default function(state = initialState, action) {
@@ -29,6 +31,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: null
+      };
+    case GET_REWARD:
+      return {
+        ...state,
+        reward: action.payload,
+        loading: false
       };
     default:
       return state;

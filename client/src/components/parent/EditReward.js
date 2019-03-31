@@ -12,7 +12,7 @@ class EditReward extends Component {
   constructor() {
     super();
     this.state = {
-      rewardName: "selected reward's reward name",
+      rewardName: "reward Name goes here",
       points: 0,
       description: "description of selected reward",
       errors: {}
@@ -24,14 +24,15 @@ class EditReward extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("nextProps: ", nextProps.reward.reward.description);
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.profile.profile) {
-      const reward = nextProps.reward;
+    if (nextProps.reward.reward) {
+      const reward = nextProps.reward.reward;
 
-      // if profile field does not exist, make empty string
+      // if reward field does not exist, make empty string
       reward.rewardName = !isEmpty(reward.rewardName) ? reward.rewardName : "";
       reward.description = !isEmpty(reward.description)
         ? reward.description
@@ -47,7 +48,8 @@ class EditReward extends Component {
   }
 
   componentDidMount() {
-    this.props.getSelectedReward();
+    const test = this.props.getSelectedReward(this.props.rewardID);
+    console.log("reward ID = ", this.props.rewardID);
   }
 
   // onSubmit function
@@ -67,34 +69,35 @@ class EditReward extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
   render() {
+    const { reward } = this.props.reward;
     const errors = this.state.errors;
 
     return (
       <div>
         <form onSubmit={this.onSubmit}>
           <TextFieldGroup
-            placeholder="* Profile Handle"
-            name="handle"
+            placeholder="Reward Name"
+            name="rewardName"
             value={this.state.rewardName}
             onChange={this.onChange}
-            error={errors.handle}
-            info="A unique handle for your profile URL. Your full name, company name, nickname"
+            error={errors.rewardName}
+            info="Name of the reward"
           />
           <TextFieldGroup
-            placeholder="Company"
-            name="company"
+            placeholder="points"
+            name="points"
             value={this.state.points}
             onChange={this.onChange}
-            error={errors.company}
-            info="Could be your own company or one you work for"
+            error={errors.points}
+            info="Points required to earn reward"
           />
           <TextFieldGroup
-            placeholder="Company"
-            name="company"
+            placeholder="description"
+            name="description"
             value={this.state.description}
             onChange={this.onChange}
-            error={errors.company}
-            info="Could be your own company or one you work for"
+            error={errors.description}
+            info="Descripton of the reward"
           />
         </form>
       </div>
@@ -103,7 +106,8 @@ class EditReward extends Component {
 }
 
 EditReward.propTypes = {
-  getSelectedReward: PropTypes.func.isRequired
+  getSelectedReward: PropTypes.func.isRequired,
+  reward: PropTypes.object.isRequired
   // getCurrentProfile: PropTypes.func.isRequired,
   // profile: PropTypes.object.isRequired,
   // errors: PropTypes.object.isRequired

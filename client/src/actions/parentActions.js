@@ -33,6 +33,19 @@ export const addReward = (newReward, history) => dispatch => {
     );
 };
 
+// Edit Reward
+export const editReward = (newReward, history) => dispatch => {
+  axios
+    .post(`api/rewards/edit/${newReward.rewardID}`, newReward)
+    .then(res => history.push("/rewards"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Get all jobs
 export const getJobs = () => dispatch => {
   dispatch(setJobsLoading());
@@ -116,9 +129,10 @@ export const setJobsLoading = () => {
 
 // Get selected reward
 export const getSelectedReward = id => dispatch => {
+  console.log("inside getselectedreward ", id);
   dispatch(setJobsLoading());
   axios
-    .get(`api/rewards/editReward/${id}`)
+    .get(`api/rewards/findReward/${id}`)
     .then(res =>
       dispatch({
         type: GET_REWARD,

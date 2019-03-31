@@ -10,5 +10,6 @@ export default combineReducers({
   errors: errorReducer,
   jobs: jobReducer,
   rewards: rewardReducer,
-  chores: dayOfJobReducer
+  chores: dayOfJobReducer,
+  reward: rewardReducer
 });

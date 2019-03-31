@@ -85,10 +85,10 @@ router.post(
 );
 
 // @route   EDIT api/jobs/edit/:rewardName
-// @desc    Edit job by jobName
+// @desc    Edit reward by id
 // @access  Private
 router.post(
-  "/edit/:rewardName",
+  "/edit/:reward_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { errors, isValid } = validateRewardInput(req.body);
@@ -98,8 +98,8 @@ router.post(
       // Return any errors with 400 status
       return res.status(400).json(errors);
     }
-    console.log("working");
-    Reward.findOne({ rewardName: req.params.rewardName }) // may have to find a way to turn the value of the rewardName before the change into a variable so that we can still use it to find the job. or just find a way to get the selected jobs id
+    console.log("inside of edit reward 2");
+    Reward.findById(req.params.reward_id)
       .then(reward => {
         if (req.body.rewardName) reward.rewardName = req.body.rewardName;
         if (req.body.description) reward.description = req.body.description;
@@ -127,29 +127,30 @@ router.get(
           errors.noprofile = "There are no rewards";
           return res.status(404).json(errors);
         }
-        console.log("get rewards api called. Jobs: ", rewards);
+        console.log("get rewards api called. Jobs: ");
         res.json(rewards);
       })
       .catch(err => res.status(404).json({ job: "There are no rewards" }));
   }
 );
 
-// @route GET api/rewards/editReward
+// @route GET api/rewards/findReward
 // @desc Get reward that was selected for editing
 // @access private
 router.get(
-  "/editReward/:reward_id",
+  "/findReward/:reward_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const errors = {};
-    console.log("entered api/rewards/editReward");
-    Reward.findOne({ reward: req.params.reward_id })
-      .populate("reward", ["name", "avatar"])
+    console.log("entered api/rewards/findReward");
+    Reward.findById(req.params.reward_id)
+      // .populate("reward", ["name", "avatar"])
       .then(reward => {
         if (!reward) {
           reward.noReward = "There is no reward that matches";
           return res.status(404).json(errors);
         }
+        console.log("reward found: ", reward);
         res.json(reward);
       })
       .catch(err => res.status(404).json(err));
