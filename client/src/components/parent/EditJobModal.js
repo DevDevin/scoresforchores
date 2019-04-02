@@ -5,16 +5,16 @@ import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import EditReward from "./EditReward";
-import { editReward, getSelectedReward } from "../../actions/parentActions";
+import { editJob, getSelectedJob } from "../../actions/parentActions";
 import isEmpty from "../../validation/is-empty";
 
-class EditRewardModal extends Component {
+class EditJobModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rewardID: "",
+      jobID: "",
       modal: false,
-      rewardName: "",
+      jobName: "",
       points: 0,
       description: "",
       errors: {}
@@ -25,54 +25,54 @@ class EditRewardModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log("nextProps: ", nextProps);
+    console.log("nextProps: ", nextProps);
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.reward.reward) {
-      const changedReward = nextProps.reward.reward;
+    if (nextProps.job.job) {
+      const changedJob = nextProps.job.job;
 
       // if reward field does not exist, make empty string
-      changedReward.rewardName = !isEmpty(changedReward.rewardName)
-        ? changedReward.rewardName
+      changedJob.jobName = !isEmpty(changedJob.jobName)
+        ? changedJob.jobName
         : "";
-      changedReward.description = !isEmpty(changedReward.description)
-        ? changedReward.description
+      changedJob.description = !isEmpty(changedJob.description)
+        ? changedJob.description
         : "";
-      changedReward._id = !isEmpty(changedReward._id) ? changedReward._id : "";
+      changedJob._id = !isEmpty(changedJob._id) ? changedJob._id : "";
 
       // Set component fields state
       this.setState({
-        rewardName: changedReward.rewardName,
-        points: changedReward.points.toString(),
-        description: changedReward.description
+        jobName: changedJob.jobName,
+        points: changedJob.points.toString(),
+        description: changedJob.description
+        // rewardID: changedJob._id.toString()
+        //rewardID: "5c9ad1c363511665b8472a82"
       });
     }
   }
 
   toggle() {
-    // console.log("toggle clicked");
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
 
     // get data back for the selected rewarded
-    this.props.getSelectedReward(this.props.rewardID);
-    console.log("this.props.reward.reward._id: ", this.props.reward.reward._id);
+    this.props.getSelectedJob(this.props.jobID);
 
-    // create newReward object to submit to addReward function
-    // need to set the newReward values to props. But first I need to pass in propss
-    const newReward = {
-      rewardName: this.state.rewardName,
+    // create newjob object to submit to addjob function
+    // need to set the newjob values to props. But first I need to pass in propss
+    const newJob = {
+      jobName: this.state.jobName,
       points: this.state.points,
       description: this.state.description,
-      rewardID: this.props.rewardID
+      jobID: this.props.jobID
     };
-    const reward = this.props.reward.reward;
+    const job = this.props.job.job;
 
-    //call the edit reward function
-    this.props.editReward(newReward, this.props.history);
+    //call the edit job function
+    this.props.editJob(newJob, this.props.history);
   }
 
   // onChange function
@@ -95,13 +95,13 @@ class EditRewardModal extends Component {
         >
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
           <ModalBody>
-            <p>{this.props.rewardID}</p>
+            <p>Hello</p>
             <div>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="Reward Name"
-                  name="rewardName"
-                  value={this.state.rewardName}
+                  name="jobName"
+                  value={this.state.jobName}
                   onChange={this.onChange}
                   error={errors.rewardName}
                   info="Name of the reward"
@@ -143,21 +143,21 @@ class EditRewardModal extends Component {
   }
 }
 
-EditRewardModal.propTypes = {
-  editReward: PropTypes.func.isRequired,
-  reward: PropTypes.object.isRequired,
-  getSelectedReward: PropTypes.func.isRequired
+EditJobModal.propTypes = {
+  editJob: PropTypes.func.isRequired,
+  job: PropTypes.object.isRequired,
+  getSelectedJob: PropTypes.func.isRequired
   // getCurrentProfile: PropTypes.func.isRequired,
   // profile: PropTypes.object.isRequired,
   // errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  reward: state.reward
+  job: state.job
   // errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { editReward, getSelectedReward }
-)(withRouter(EditRewardModal));
+  { editJob, getSelectedJob }
+)(withRouter(EditJobModal));

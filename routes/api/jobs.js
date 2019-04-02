@@ -65,12 +65,13 @@ router.delete(
 );
 
 // @route   EDIT api/jobs/edit/:jobName
-// @desc    Edit job by jobName
+// @desc    Edit reward by id
 // @access  Private
 router.post(
-  "/edit/:jobName",
+  "/edit/:job_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log("inside of edit job api!!!!");
     const { errors, isValid } = validateJobInput(req.body);
 
     // Check Validation
@@ -78,8 +79,8 @@ router.post(
       // Return any errors with 400 status
       return res.status(400).json(errors);
     }
-    console.log("working");
-    Job.findOne({ jobName: req.params.jobName }) // may have to find a way to turn the value of the jobName before the change into a variable so that we can still use it to find the job. or just find a way to get the selected jobs id
+    console.log("inside of edit job 2");
+    Job.findById(req.params.job_id)
       .then(job => {
         if (req.body.jobName) job.jobName = req.body.jobName;
         if (req.body.description) job.description = req.body.description;
@@ -111,6 +112,29 @@ router.get(
         res.json(jobs);
       })
       .catch(err => res.status(404).json({ job: "There are no Jobs" }));
+  }
+);
+
+// @route GET api/jobs/findJob
+// @desc Get job that was selected for editing
+// @access private
+router.get(
+  "/findJob/:job_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    console.log("entered api/jobs/findJob");
+    Job.findById(req.params.job_id)
+      // .populate("reward", ["name", "avatar"])
+      .then(job => {
+        if (!job) {
+          job.noJob = "There is no job that matches";
+          return res.status(404).json(errors);
+        }
+        console.log("job found: ", job);
+        res.json(job);
+      })
+      .catch(err => res.status(404).json(err));
   }
 );
 

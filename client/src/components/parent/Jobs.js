@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getJobs } from "../../actions/parentActions";
 import { deleteJob } from "../../actions/parentActions";
+import EditJobModal from "../parent/EditJobModal";
 
 class Jobs extends Component {
   componentDidMount() {
@@ -32,7 +33,7 @@ class Jobs extends Component {
               <td key={job._id}>{job.description}</td>
               <td key={job._id}>{job.points}</td>
               <td key={job._id}>
-                <Button color="warning">Edit</Button>{" "}
+                <EditJobModal jobID={job._id} />
               </td>
               <td key={job._id}>
                 <button

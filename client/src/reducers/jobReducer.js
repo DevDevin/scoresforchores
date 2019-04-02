@@ -1,13 +1,15 @@
 import {
   GET_JOBS,
   PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE
+  CLEAR_CURRENT_PROFILE,
+  GET_JOB
 } from "../actions/types";
 
 const initialState = {
   profile: null,
   jobs: null,
-  loading: false
+  loading: false,
+  job: null
 };
 
 export default function(state = initialState, action) {
@@ -28,6 +30,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: null
+      };
+    case GET_JOB:
+      console.log("entered GET_JOB function in jobReducer.js");
+      console.log("action.payload: ", action.payload);
+      return {
+        ...state,
+        job: action.payload,
+        loading: false
       };
     default:
       return state;

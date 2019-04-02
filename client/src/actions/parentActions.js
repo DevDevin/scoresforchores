@@ -4,7 +4,8 @@ import {
   GET_JOBS,
   JOBS_LOADING,
   GET_REWARDS,
-  GET_REWARD
+  GET_REWARD,
+  GET_JOB
 } from "./types";
 
 // Add Job
@@ -38,6 +39,20 @@ export const editReward = (newReward, history) => dispatch => {
   axios
     .post(`api/rewards/edit/${newReward.rewardID}`, newReward)
     .then(res => history.push("/rewards"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Edit Job
+export const editJob = (newJob, history) => dispatch => {
+  console.log("inside edit job: ", newJob.jobID);
+  axios
+    .post(`api/jobs/edit/${newJob.jobID}`, newJob)
+    .then(res => history.push("/jobs"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -142,6 +157,26 @@ export const getSelectedReward = id => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_REWARD,
+        payload: {}
+      })
+    );
+};
+
+// Get selected job
+export const getSelectedJob = id => dispatch => {
+  console.log("inside getSelectedJob ", id);
+  dispatch(setJobsLoading());
+  axios
+    .get(`api/jobs/findJob/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_JOB,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_JOB,
         payload: {}
       })
     );
