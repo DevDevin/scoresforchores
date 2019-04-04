@@ -16,19 +16,21 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import AssignJobsModal from "../AssignJobsModal";
 
-class Friday extends Component {
+class Sunday extends Component {
   render() {
     return (
-      <TabPane tabId="5">
+      <TabPane tabId="7">
         <Row>
           <Col sm="12">
-            <h4>Friday Chores</h4>
+            <h4>Sunday Chores</h4>
           </Col>
         </Row>
+        <AssignJobsModal />
       </TabPane>
     );
   }
 }
 
-export default Friday;
+export default Sunday;

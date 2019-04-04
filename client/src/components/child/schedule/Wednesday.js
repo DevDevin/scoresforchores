@@ -10,7 +10,11 @@ import {
   CardTitle,
   CardText,
   Row,
-  Col
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 
 class Wednesday extends Component {

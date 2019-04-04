@@ -17,9 +17,8 @@ reject reward request -- done
 get a list of all the rewards --done
 get a list of all the jobs -- done
 
-edit jobs
+edit jobs -- done
 edit rewards -- done
-populate edit reward fields with current values
 messaging system
 schedule view (child)
 submit completion request (child)

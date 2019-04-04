@@ -6,29 +6,31 @@ import {
   NavItem,
   NavLink,
   Card,
-  Button,
   CardTitle,
   CardText,
   Row,
   Col,
+  Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import AssignJobsModal from "../AssignJobsModal";
 
-class Friday extends Component {
+class Thursday extends Component {
   render() {
     return (
-      <TabPane tabId="5">
+      <TabPane tabId="4">
         <Row>
           <Col sm="12">
-            <h4>Friday Chores</h4>
+            <h4>Thursday Chores</h4>
           </Col>
         </Row>
+        <AssignJobsModal />
       </TabPane>
     );
   }
 }
 
-export default Friday;
+export default Thursday;

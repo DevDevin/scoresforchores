@@ -6,11 +6,15 @@ import {
   NavItem,
   NavLink,
   Card,
-  Button,
   CardTitle,
   CardText,
   Row,
-  Col
+  Col,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 
 class Thursday extends Component {

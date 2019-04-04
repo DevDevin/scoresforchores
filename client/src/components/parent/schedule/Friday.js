@@ -16,6 +16,7 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import AssignJobsModal from "../AssignJobsModal";
 
 class Friday extends Component {
   render() {
@@ -26,6 +27,7 @@ class Friday extends Component {
             <h4>Friday Chores</h4>
           </Col>
         </Row>
+        <AssignJobsModal />
       </TabPane>
     );
   }

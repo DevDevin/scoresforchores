@@ -12,6 +12,7 @@ import {
   ModalFooter
 } from "reactstrap";
 import { getMyChores } from "../../../actions/childActions";
+import AssignJobsModal from "../AssignJobsModal";
 
 class Monday extends Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class Monday extends Component {
             <h4>Monday Chores</h4>
           </Col>
         </Row>
+        <AssignJobsModal />
       </TabPane>
     );
   }
