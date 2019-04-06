@@ -19,6 +19,9 @@ import {
 import AssignJobsModal from "../AssignJobsModal";
 
 class Tuesday extends Component {
+  componentDidMount() {
+    console.log("this.props.chores from Monday.js: ", this.props.chores);
+  }
   render() {
     return (
       <TabPane tabId="2">

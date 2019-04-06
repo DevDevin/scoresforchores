@@ -164,4 +164,50 @@ router.get(
   }
 );
 
+// @route GET api/jobs/jobs-byname
+// @desc Get all jobs for the child that was selected
+// @access private
+router.get(
+  "/jobs-byname/:child_name",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    console.log("entered api/jobs/jobs-byname/child_name");
+    DayofJob.findOne({ childName: req.params.child_name })
+      .populate("dayofjob", ["name"])
+      .then(dayofjob => {
+        if (!dayofjob) {
+          errors.noprofile = "There are no dayofjobs assigned to this child";
+          return res.status(404).json(errors);
+        }
+        console.log("get jobs-byname called: ", dayofjob);
+        res.json(dayofjob);
+      })
+      .catch(err => res.status(404).json({ dayofjob: "No day of jobs found" }));
+  }
+);
+
+// // @route   GET api/dayofjobs/all
+// // @desc    Get all jobs
+// // @access  Public
+// router.get(
+//   "/all",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     const errors = {};
+//     console.log("insided of get all day of jobs");
+//     DayofJob.find()
+//       .populate("job", ["name"])
+//       .then(dayofjob => {
+//         if (!dayofjob) {
+//           errors.noprofile = "There are no dayofjob";
+//           return res.status(404).json(errors);
+//         }
+//         console.log("get all dayOfdayOfJobs api called.");
+//         res.json(dayofjob);
+//       })
+//       .catch(err => res.status(404).json({ dayofjob: "There are no Jobs" }));
+//   }
+// );
+
 module.exports = router;

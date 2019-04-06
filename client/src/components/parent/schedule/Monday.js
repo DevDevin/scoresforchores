@@ -13,17 +13,21 @@ import {
 } from "reactstrap";
 import { getMyChores } from "../../../actions/childActions";
 import AssignJobsModal from "../AssignJobsModal";
-
+import JobsByName from "./JobsByName";
+// TODO: MAYBE INSTEAD OF TRYING TO BE FANCY I CAN JUST BRING IN ALL THE JOBS TO EACH DAY AND THEN MAP AND SORT BY THE DAY. OR MAYBE I DON'T HAVE TO BECAUSE CHORES IS ALREADY GLOBAL FOR THAT WHOLE THING.
 class Monday extends Component {
   componentDidMount() {
     this.props.getMyChores();
   }
+
   render() {
+    console.log("this.props.chores from Monday.js: ", this.props.chores);
     return (
       <TabPane tabId="1">
         <Row>
           <Col sm="12">
             <h4>Monday Chores</h4>
+            <JobsByName />
           </Col>
         </Row>
         <AssignJobsModal />

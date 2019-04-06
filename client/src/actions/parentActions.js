@@ -5,7 +5,9 @@ import {
   JOBS_LOADING,
   GET_REWARDS,
   GET_REWARD,
-  GET_JOB
+  GET_JOB,
+  GET_JOBS_BY_NAME,
+  GET_DAYOFJOBS
 } from "./types";
 
 // Add Job
@@ -75,6 +77,27 @@ export const getJobs = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_JOBS,
+        payload: null
+      })
+    );
+};
+
+// Get Jobs By Name
+export const getJobsByName = childName => dispatch => {
+  console.log("entered getJobsByName parentActions.js");
+  console.log("childName: ", childName);
+  dispatch(setJobsLoading());
+  axios
+    .get(`/api/dayofjobs/jobs-byname/${childName}`)
+    .then(res =>
+      dispatch({
+        type: GET_JOBS_BY_NAME,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_JOBS_BY_NAME,
         payload: null
       })
     );
@@ -178,6 +201,26 @@ export const getSelectedJob = id => dispatch => {
       dispatch({
         type: GET_JOB,
         payload: {}
+      })
+    );
+};
+
+// Get all dayofjobs
+export const getDayOfJobs = () => dispatch => {
+  console.log("get all day of jobs called in parentActions.js");
+  dispatch(setJobsLoading());
+  axios
+    .get("/api/dayofjobs/all")
+    .then(res =>
+      dispatch({
+        type: GET_DAYOFJOBS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_DAYOFJOBS,
+        payload: null
       })
     );
 };

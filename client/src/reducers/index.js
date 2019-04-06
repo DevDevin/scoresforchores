@@ -12,5 +12,6 @@ export default combineReducers({
   rewards: rewardReducer,
   chores: dayOfJobReducer,
   reward: rewardReducer,
-  job: jobReducer
+  job: jobReducer,
+  jobsByName: dayOfJobReducer
 });

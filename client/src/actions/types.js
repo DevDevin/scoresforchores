@@ -8,3 +8,4 @@ export const PROFILE_LOADING = "PROFILE_LOADING";
 export const GET_REWARDS = "GET_REWARDS";
 export const GET_DAYOFJOBS = "GET_DAYOFJOBS";
 export const GET_REWARD = "GET_REWARD";
+export const GET_JOBS_BY_NAME = "GET_JOBS_BY_NAME";

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import SelectListGroup from "../common/SelectListGroup";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 // *** Consider turning this into a navbar component that can be used in each day of the week.
@@ -11,7 +14,9 @@ class AssignJobsModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      childName: "",
+      jobName: ""
     };
 
     this.toggle = this.toggle.bind(this);
@@ -22,16 +27,9 @@ class AssignJobsModal extends Component {
       modal: !prevState.modal
     }));
   }
+
   render() {
     const errors = this.state.errors;
-
-    // Select options for status
-    const child = [
-      { label: "Select a child:", value: 0 },
-      { label: "Robbie", value: "Robbie" },
-      { label: "Brinlee", value: "Brinlee" },
-      { label: "Lucito", value: "Lucito" }
-    ];
 
     // Select options for status
     const jobs = [
@@ -59,15 +57,6 @@ class AssignJobsModal extends Component {
             <div>
               <form onSubmit={this.onSubmit}>
                 <SelectListGroup
-                  placeholder="Child Name"
-                  name="childName"
-                  value={this.state.status}
-                  onChange={this.onChange}
-                  error={errors}
-                  options={child}
-                  info="Give us an idea of where you are in your career"
-                />
-                <SelectListGroup
                   placeholder="Job"
                   name="jobName"
                   value={this.state.status}
@@ -92,9 +81,21 @@ class AssignJobsModal extends Component {
             </Button>
           </ModalFooter>
         </Modal>
+        <div />
       </div>
     );
   }
 }
 
-export default AssignJobsModal;
+AssignJobsModal.propTypes = {
+  getJobsByName: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  //
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withRouter(AssignJobsModal));

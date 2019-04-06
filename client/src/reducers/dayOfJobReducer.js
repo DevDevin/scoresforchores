@@ -1,7 +1,8 @@
 import {
   GET_DAYOFJOBS,
   PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE
+  CLEAR_CURRENT_PROFILE,
+  GET_JOBS_BY_NAME
 } from "../actions/types";
 
 const initialState = {
@@ -29,6 +30,14 @@ export default function(state = initialState, action) {
         ...state,
         profile: null
       };
+    case GET_JOBS_BY_NAME:
+      console.log("entered GET_JOBS_BY_NAME in dayofjobReducer.js");
+      return {
+        ...state,
+        jobsByName: action.payload,
+        loading: true
+      };
+
     default:
       return state;
   }
