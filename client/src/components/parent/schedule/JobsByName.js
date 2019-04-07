@@ -10,6 +10,7 @@ import EditJobModal from "../../parent/EditJobModal";
 class JobsByName extends Component {
   componentDidMount() {
     this.props.getJobs();
+    this.setState({ chores: this.props.chores });
   }
 
   onDeleteClick(id) {
@@ -19,38 +20,37 @@ class JobsByName extends Component {
 
   render() {
     const { chores, loading } = this.props.chores;
-    console.log("this.props.chores from JobsByName: ", this.props.chores);
-    console.log("chores from jobsByName: ", chores);
-    let jobItems;
 
-    // if (JobsByName === null || loading) {
-    //   jobItems = <Spinner />;
-    // } else {
-    //   if (chores.chores.length > 0) {
-    //     jobItems = chores.chores.map(job => (
-    //       <tbody>
-    //         <tr>
-    //           <td key={job._id}>{job.jobName}</td>
-    //           <td key={job._id}>{job.description}</td>
-    //           <td key={job._id}>{job.points}</td>
-    //           <td key={job._id}>
-    //             <EditJobModal jobID={job._id} />
-    //           </td>
-    //           <td key={job._id}>
-    //             <button
-    //               onClick={this.onDeleteClick.bind(this, job._id)}
-    //               className="btn btn-danger"
-    //             >
-    //               Delete
-    //             </button>
-    //           </td>
-    //         </tr>
-    //       </tbody>
-    //     ));
-    //   } else {
-    //     jobItems = <h4>No profiles found...</h4>;
-    //   }
-    // }
+    if (chores != null) {
+      // get chores according to name and day
+      let newChores = chores.filter(function(obj) {
+        return obj.childName === "Brinlee" && obj.day === "Monday";
+      });
+
+      console.log("newChores", newChores);
+      jobItems = newChores.map(job => (
+        <tbody>
+          <tr>
+            <td key={job._id}>{job.jobName}</td>
+            <td key={job._id}>{job.description}</td>
+            <td key={job._id}>{job.points}</td>
+            <td key={job._id}>
+              <EditJobModal jobID={job._id} />
+            </td>
+            <td key={job._id}>
+              <button
+                onClick={this.onDeleteClick.bind(this, job._id)}
+                className="btn btn-danger"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      ));
+    }
+
+    let jobItems;
 
     return (
       <div className="profiles">
@@ -69,6 +69,7 @@ class JobsByName extends Component {
                     <th>Delete Job</th>
                   </tr>
                 </thead>
+                <tbody />
                 {jobItems}
               </Table>
             </div>
