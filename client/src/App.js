@@ -59,7 +59,11 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>
-                <PrivateRoute exact path="/schedule" component={Schedule} />
+                <PrivateRoute
+                  exact
+                  path="/child-schedule"
+                  component={Schedule}
+                />
               </Switch>
               <Switch>
                 <PrivateRoute

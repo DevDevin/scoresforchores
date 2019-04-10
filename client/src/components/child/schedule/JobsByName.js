@@ -49,7 +49,7 @@ class JobsByName extends Component {
       let newChores;
       // get chores according to name and day
       newChores = chores.filter(function(obj) {
-        return obj.childName === childName && obj.day === day;
+        return obj.childName === "Brinlee" && obj.day === day;
       });
 
       console.log("newChores", newChores);
@@ -76,14 +76,6 @@ class JobsByName extends Component {
     }
 
     // Select options for status
-    const child = [
-      { label: "Select a child:", value: 0 },
-      { label: "Robbie", value: "Robbie" },
-      { label: "Brinlee", value: "Brinlee" },
-      { label: "Lucito", value: "Lucito" }
-    ];
-
-    // Select options for status
     const dayOfWeek = [
       { label: "Select a Day:", value: 0 },
       { label: "Monday", value: "Monday" },
@@ -97,17 +89,6 @@ class JobsByName extends Component {
 
     return (
       <div className="profiles">
-        <div>
-          <SelectListGroup
-            placeholder=""
-            name="childName"
-            value={this.state.childName}
-            onChange={this.onChangeChild}
-            error={errors}
-            options={child}
-            info="Name of the reward"
-          />
-        </div>
         <div>
           <SelectListGroup
             placeholder=""

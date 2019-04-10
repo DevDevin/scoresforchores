@@ -23,4 +23,8 @@ messaging system
 schedule view (child)
 submit completion request (child)
 accept or reject completion request (parent)
-assign jobs (parent)
+dynamically populate dropdowns with childNames
+delete job assignments (parent)
+add job assignment (parent)
+create link flow
+disable rendering according to user priveledges
