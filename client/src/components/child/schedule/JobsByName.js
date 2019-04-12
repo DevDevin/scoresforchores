@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../../common/Spinner";
 import { getJobs } from "../../../actions/parentActions";
-import { deleteJob, getJobsByName } from "../../../actions/parentActions";
+import { deleteDayOfJob, getJobsByName } from "../../../actions/parentActions";
 import EditJobModal from "../../parent/EditJobModal";
 import SelectListGroup from "../../common/SelectListGroup";
 
@@ -22,8 +22,8 @@ class JobsByName extends Component {
   }
 
   onDeleteClick(id) {
-    this.props.deleteJob(id);
-    this.props.history.push("/jobs");
+    this.props.deleteDayOfJob(id);
+    // this.props.history.push("/jobs");
   }
 
   // onChange day
@@ -39,6 +39,9 @@ class JobsByName extends Component {
   }
 
   render() {
+    // const { user } = this.props.auth;
+    // console.log("user: ", user);
+
     const errors = this.state.errors;
     const { chores, loading } = this.props.chores;
     const day = this.state.dayOfWeek;
@@ -60,14 +63,11 @@ class JobsByName extends Component {
             <td key={job._id}>{job.description}</td>
             <td key={job._id}>{job.points}</td>
             <td key={job._id}>
-              <EditJobModal jobID={job._id} />
-            </td>
-            <td key={job._id}>
               <button
                 onClick={this.onDeleteClick.bind(this, job._id)}
-                className="btn btn-danger"
+                className="btn btn-warning"
               >
-                Delete
+                Complete
               </button>
             </td>
           </tr>
@@ -111,8 +111,7 @@ class JobsByName extends Component {
                     <th>Job</th>
                     <th>Description</th>
                     <th>Points</th>
-                    <th>Edit Job</th>
-                    <th>Delete Job</th>
+                    <th>Complete Job</th>
                   </tr>
                 </thead>
                 <tbody />
@@ -127,8 +126,9 @@ class JobsByName extends Component {
 }
 
 JobsByName.propTypes = {
-  deleteJob: PropTypes.func.isRequired,
-  chores: PropTypes.object.isRequired
+  deleteDayOfJob: PropTypes.func.isRequired,
+  chores: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -137,5 +137,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteJob }
+  { deleteDayOfJob }
 )(JobsByName);

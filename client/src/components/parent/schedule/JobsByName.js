@@ -3,10 +3,9 @@ import { Table, Button } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../../common/Spinner";
-import { getJobs } from "../../../actions/parentActions";
-import { deleteJob, getJobsByName } from "../../../actions/parentActions";
-import EditJobModal from "../../parent/EditJobModal";
+import { deleteDayOfJob, getJobsByName } from "../../../actions/parentActions";
 import SelectListGroup from "../../common/SelectListGroup";
+import AssignJobsModal from "../AssignJobsModal";
 
 class JobsByName extends Component {
   constructor(props) {
@@ -22,8 +21,8 @@ class JobsByName extends Component {
   }
 
   onDeleteClick(id) {
-    this.props.deleteJob(id);
-    this.props.history.push("/jobs");
+    this.props.deleteDayOfJob(id);
+    // this.props.history.push("/jobs");
   }
 
   // onChange day
@@ -59,9 +58,6 @@ class JobsByName extends Component {
             <td key={job._id}>{job.jobName}</td>
             <td key={job._id}>{job.description}</td>
             <td key={job._id}>{job.points}</td>
-            <td key={job._id}>
-              <EditJobModal jobID={job._id} />
-            </td>
             <td key={job._id}>
               <button
                 onClick={this.onDeleteClick.bind(this, job._id)}
@@ -122,7 +118,7 @@ class JobsByName extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="display-4 text-center">Childs Jobs</h1>
+              <h1 className="display-4 text-center">{childName}'s Jobs</h1>
 
               <Table borderless>
                 <thead>
@@ -130,7 +126,6 @@ class JobsByName extends Component {
                     <th>Job</th>
                     <th>Description</th>
                     <th>Points</th>
-                    <th>Edit Job</th>
                     <th>Delete Job</th>
                   </tr>
                 </thead>
@@ -140,13 +135,16 @@ class JobsByName extends Component {
             </div>
           </div>
         </div>
+        <div className="assignJobsModal">
+          <AssignJobsModal childName={childName} day={day} />
+        </div>
       </div>
     );
   }
 }
 
 JobsByName.propTypes = {
-  deleteJob: PropTypes.func.isRequired,
+  deleteDayOfJob: PropTypes.func.isRequired,
   chores: PropTypes.object.isRequired
 };
 
@@ -156,5 +154,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteJob }
+  { deleteDayOfJob }
 )(JobsByName);

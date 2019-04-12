@@ -13,7 +13,7 @@ const DayofJob = require("../../models/DayofJob");
 // @access Public
 router.get("/test", (req, res) => res.json({ msg: "DayofJobs Works" }));
 
-// @route POST api/jobs/add
+// @route POST api/dayofjobs/add
 // @desc Add job to the database
 // @access Private
 router.post(

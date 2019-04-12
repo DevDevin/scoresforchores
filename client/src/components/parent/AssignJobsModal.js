@@ -16,7 +16,8 @@ class AssignJobsModal extends Component {
     this.state = {
       modal: false,
       childName: "",
-      jobName: ""
+      jobName: "",
+      day: this.props.day
     };
 
     this.toggle = this.toggle.bind(this);
@@ -26,19 +27,41 @@ class AssignJobsModal extends Component {
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
+
+    //TODO: SET STATE BY TARGET AND CALL ADD DAYOFJOB FUNCTION
   }
 
   render() {
     const errors = this.state.errors;
 
-    // Select options for status
+    // Select options for job
     const jobs = [
-      { label: "Select a job:", value: 0 },
+      { label: "Choose a job:", value: 0 },
       { label: "Job 1", value: "Job 1" },
       { label: "Job 2", value: "Job 2" },
       { label: "Job 3", value: "Job 3" },
       { label: "Job 4", value: "Job 4" },
       { label: "Job 5", value: "Job 5" }
+    ];
+
+    // Select options for childName
+    const children = [
+      { label: "Choose a child:", value: 0 },
+      { label: "Brinlee", value: "Brinlee" },
+      { label: "Robbie", value: "Robbie" },
+      { label: "Lucito", value: "Lucito" }
+    ];
+
+    // Select options for day
+    const dayOfTheWeek = [
+      { label: "Choose a day:", value: 0 },
+      { label: "Monday", value: "Monday" },
+      { label: "Tuesday", value: "Tuesday" },
+      { label: "Wednesday", value: "Wednesday" },
+      { label: "Thursday", value: "Thursday" },
+      { label: "Friday", value: "Friday" },
+      { label: "Saturday", value: "Tuesday" },
+      { label: "Sunday", value: "Sunday" }
     ];
 
     return (
@@ -53,17 +76,38 @@ class AssignJobsModal extends Component {
         >
           <ModalHeader toggle={this.toggle}>Assign Job</ModalHeader>
           <ModalBody>
-            <p>Hello</p>
+            <p>
+              Assign Job for {this.props.childName} on {this.props.day}
+            </p>
+            <p>{this.props.childName}</p>
             <div>
               <form onSubmit={this.onSubmit}>
                 <SelectListGroup
-                  placeholder="Job"
+                  placeholder="Child Name"
+                  name="childName"
+                  value={this.state.status}
+                  onChange={this.onChange}
+                  error={errors}
+                  options={children}
+                  info="Child to whom the job is being assigned."
+                />
+                <SelectListGroup
+                  placeholder="Job Name"
                   name="jobName"
                   value={this.state.status}
                   onChange={this.onChange}
                   error={errors}
                   options={jobs}
-                  info="Give us an idea of where you are in your career"
+                  info="Job that is being assigned."
+                />
+                <SelectListGroup
+                  placeholder="Day"
+                  name="day"
+                  value={this.state.day}
+                  onChange={this.onChange}
+                  error={errors}
+                  options={dayOfTheWeek}
+                  info="Day of the week for which job is being assigned."
                 />
               </form>
             </div>

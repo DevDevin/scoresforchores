@@ -125,7 +125,25 @@ export const getRewards = () => dispatch => {
 // Delete Job
 export const deleteJob = id => dispatch => {
   axios
-    .delete(`api/jobs/${id}`)
+    .delete(`api/dayofjobs/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_JOBS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Delete Job
+export const deleteDayOfJob = id => dispatch => {
+  axios
+    .delete(`api/dayofjobs/${id}`)
     .then(res =>
       dispatch({
         type: GET_JOBS,
