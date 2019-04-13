@@ -20,17 +20,20 @@ router.post(
   "/add",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log("add day of jobs called in routes: ", req.body.jobName);
     const { errors, isValid } = validateDayofJobInput(req.body);
 
     if (!isValid) {
+      console.log(errors);
       return res.status(400).json(errors);
     }
-
+    console.log("add day of jobs2 called in routes", req.body.jobName);
     DayofJob.findOne({ jobName: req.body.jobName }).then(jobName => {
       if (jobName) {
         errors.strJobName = "This job has already been assigned for this day";
         return res.status(400).json(errors);
       } else {
+        console.log("add day of routes 3 called");
         const newDayofJob = new DayofJob({
           jobName: req.body.jobName,
           day: req.body.day,

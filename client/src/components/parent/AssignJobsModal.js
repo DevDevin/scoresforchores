@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { addDayOfJob } from "../../actions/parentActions";
 
 // *** Consider turning this into a navbar component that can be used in each day of the week.
 // That way once this is done we only have to add a single component to each day of the week
@@ -17,10 +18,11 @@ class AssignJobsModal extends Component {
       modal: false,
       childName: "",
       jobName: "",
-      day: this.props.day
+      day: ""
     };
 
     this.toggle = this.toggle.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   toggle() {
@@ -29,6 +31,28 @@ class AssignJobsModal extends Component {
     }));
 
     //TODO: SET STATE BY TARGET AND CALL ADD DAYOFJOB FUNCTION
+    // create newjob object to submit to addjob function
+    // need to set the newjob values to props. But first I need to pass in propss
+    const newJob = {
+      jobName: this.state.jobName,
+      childName: this.state.childName,
+      day: this.state.day,
+      points: this.state.points,
+      description: this.state.description,
+      jobID: this.props.jobID,
+      complete: false,
+      description: "description filler",
+      status: "assigned",
+      points: 10
+    };
+
+    //call the edit job function
+    this.props.addDayOfJob(newJob, this.props.history);
+  }
+
+  // onChange function
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -85,7 +109,7 @@ class AssignJobsModal extends Component {
                 <SelectListGroup
                   placeholder="Child Name"
                   name="childName"
-                  value={this.state.status}
+                  value={this.state.childName}
                   onChange={this.onChange}
                   error={errors}
                   options={children}
@@ -94,7 +118,7 @@ class AssignJobsModal extends Component {
                 <SelectListGroup
                   placeholder="Job Name"
                   name="jobName"
-                  value={this.state.status}
+                  value={this.state.jobName}
                   onChange={this.onChange}
                   error={errors}
                   options={jobs}
@@ -132,7 +156,8 @@ class AssignJobsModal extends Component {
 }
 
 AssignJobsModal.propTypes = {
-  getJobsByName: PropTypes.func.isRequired
+  addDayOfJob: PropTypes.func.isRequired,
+  addJob: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -141,5 +166,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { addDayOfJob }
 )(withRouter(AssignJobsModal));

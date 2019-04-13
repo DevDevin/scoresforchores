@@ -12,9 +12,24 @@ import {
 
 // Add Job
 export const addJob = (newJob, history) => dispatch => {
+  console.log("add job called in parent actions");
   axios
     .post("/api/jobs/add", newJob)
     .then(res => history.push("/jobs"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Add dayofjob
+export const addDayOfJob = (newJob, history) => dispatch => {
+  console.log("add day job called in parent actions: ", newJob);
+  axios
+    .post("/api/dayofjobs/add", newJob)
+    .then(res => history.push("/parent-schedule"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

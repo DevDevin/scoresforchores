@@ -27,9 +27,9 @@ class ParentHome extends Component {
                     <p>
                       Keep track of each of your childrens weekly schedules.
                     </p>
-                    <a href="profile.html" className="btn btn-info">
-                      View Schedule
-                    </a>
+                    <Link className="btn btn-info" to="/parent-schedule">
+                      Go to schedules manager
+                    </Link>
                   </div>
                   <div className="col-md-4 d-none d-lg-block">
                     <h4>Week of ____</h4>
