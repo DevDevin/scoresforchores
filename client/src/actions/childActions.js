@@ -27,3 +27,17 @@ export const setChoresLoading = () => {
     type: JOBS_LOADING
   };
 };
+
+// submit completion request
+export const submitCompletionRequest = (dayOfJobID, history) => dispatch => {
+  console.log("inside submit completion request ", dayOfJobID);
+  axios
+    .post(`api/dayofjobs/completionrequest/${dayOfJobID}`)
+    .then(res => history.push("/jobs"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};

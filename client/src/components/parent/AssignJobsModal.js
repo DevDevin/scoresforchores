@@ -6,10 +6,7 @@ import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { addDayOfJob } from "../../actions/parentActions";
 
-// *** Consider turning this into a navbar component that can be used in each day of the week.
-// That way once this is done we only have to add a single component to each day of the week
-// rather than a bunch of stuff. I could have things like a select child button in here to toggle between
-// which child's chores are being viewed.
+// TODO: only Brinlee can add a job. Need to see why.
 
 class AssignJobsModal extends Component {
   constructor(props) {

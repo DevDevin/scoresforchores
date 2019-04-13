@@ -7,6 +7,7 @@ import { getJobs } from "../../../actions/parentActions";
 import { deleteDayOfJob, getJobsByName } from "../../../actions/parentActions";
 import EditJobModal from "../../parent/EditJobModal";
 import SelectListGroup from "../../common/SelectListGroup";
+import CompletionRequestModal from "./CompletionRequestModal";
 
 class JobsByName extends Component {
   constructor(props) {
@@ -63,12 +64,7 @@ class JobsByName extends Component {
             <td key={job._id}>{job.description}</td>
             <td key={job._id}>{job.points}</td>
             <td key={job._id}>
-              <button
-                onClick={this.onDeleteClick.bind(this, job._id)}
-                className="btn btn-warning"
-              >
-                Complete
-              </button>
+              <CompletionRequestModal dayOfJobID={job._id} />
             </td>
           </tr>
         </tbody>

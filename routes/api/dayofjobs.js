@@ -20,7 +20,7 @@ router.post(
   "/add",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("add day of jobs called in routes: ", req.body.jobName);
+    console.log("add day of jobs called in routes: ", req.body);
     const { errors, isValid } = validateDayofJobInput(req.body);
 
     if (!isValid) {
@@ -74,14 +74,15 @@ router.delete(
 // @desc    Submit a completion request for jobs done
 // @access  Private
 router.post(
-  "/completionrequest",
+  "/completionrequest/:dayofjobs_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("working");
-    DayofJob.findById(req.body.id) // TODO: make this a variable that is the id of the selected reward
+    console.log("inside of completion request dayofjobs.js");
+    DayofJob.findById(req.params.dayofjobs_id) // TODO: make this a variable that is the id of the selected reward
       .then(dayofjob => {
         dayofjob.status = "Submitted";
         dayofjob.save();
+        console.log("dayofjob status changed to submitted: ", dayofjob);
         res.json({ message: "dayofjob completed: ", dayofjob });
       })
       .catch(err => {
